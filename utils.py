@@ -35,7 +35,7 @@ def WriteFollowerIDs(api, user_id):
         return False
 
     ids = []
-    for page in tweepy.Cursor(api.followers_ids, id=user_id).pages():
+    for page in tweepy.Cursor(api.followers_ids, id=user_id).pages(1000):
         ids.extend(page)
 
     ids = [str(i) for i in ids]
