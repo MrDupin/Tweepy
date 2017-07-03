@@ -15,6 +15,19 @@ def Auth():
     return tweepy.API(auth, wait_on_rate_limit=True)
 
 
+def BuildDict():
+    f = open("names.txt", 'r')
+    lines = f.readlines()
+    f.close()
+
+    d = {"807332651782774785": "paleshadow7"}
+    for line in lines:
+        ID, name = line.strip().split(',')
+        d[ID] = name
+
+    return d
+
+
 def GetNames(api, ids):
     return [user.screen_name for user in api.lookup_users(user_ids=ids)]
 
