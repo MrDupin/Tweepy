@@ -16,16 +16,7 @@ def Auth():
 
 
 def GetNames(api, ids):
-    h = int(len(ids)/100)
-
-    users = []
-    for i in range(h):
-        screen_names = [user.screen_name for user in api.lookup_users(user_ids=ids[i*100:i*100+100])]
-        users += screen_names
-
-    users += [user.screen_name for user in api.lookup_users(user_ids=ids[h*100:])]
-
-    return users
+    return [user.screen_name for user in api.lookup_users(user_ids=ids)]
 
 
 def WriteFollowerIDs(api, user_id):
@@ -35,12 +26,29 @@ def WriteFollowerIDs(api, user_id):
         return False
 
     ids = []
-    for page in tweepy.Cursor(api.followers_ids, id=user_id).pages(1000):
+    for page in tweepy.Cursor(api.followers_ids, id=user_id).pages():
         ids.extend(page)
 
     ids = [str(i) for i in ids]
     f = open(fName, "w")
     f.write('\n'.join(ids))
     f.close()
+
+    return True
+
+
+def Reload(api, user_id):
+    fName = "ids/{}".format(user_id)
+
+    ids = []
+    for page in tweepy.Cursor(api.followers_ids, id=user_id).pages():
+        ids.extend(page)
+
+    print("Finished Reading")
+    ids = [str(i) for i in ids]
+    f = open(fName, "w")
+    f.write('\n'.join(ids))
+    f.close()
+    print("Finished Writing")
 
     return True
