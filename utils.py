@@ -54,7 +54,7 @@ def Reload(api, user_id):
     fName = "ids/{}".format(user_id)
 
     ids = []
-    for page in tweepy.Cursor(api.followers_ids, id=user_id).pages():
+    for page in tweepy.Cursor(api.followers_ids, id=user_id).pages(300):
         ids.extend(page)
 
     print("Finished Reading")
@@ -65,3 +65,12 @@ def Reload(api, user_id):
     print("Finished Writing")
 
     return True
+
+
+def SortCentrality(c_dict):
+    return sorted(c_dict, key=c_dict.get, reverse=True)
+
+
+def WriteCentrality(f, s_dict, c_dict):
+    for u in s_dict:
+        f.write("{}, {}\n".format(u, c_dict[u]))
