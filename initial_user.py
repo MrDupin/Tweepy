@@ -1,7 +1,6 @@
 import time
 import tweepy
-import utils
-from authenticate import Auth
+from utils import Auth
 api = Auth()
 
 
