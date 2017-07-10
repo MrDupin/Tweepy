@@ -17,6 +17,7 @@ for u_id, u_nm in users.items():
 
 nx.draw(g)
 plt.savefig("graph.png")
+nx.write_gml(g, "graph.gml")
 
 report = open("graph_report.txt", "w")
 
