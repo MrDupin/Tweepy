@@ -1,11 +1,10 @@
-import time
 import tweepy
 import utils
 api = utils.Auth()
 
 
 
-f = open("save.txt", "r")
+f = open("ids.txt", "r")
 lines = f.readlines()
 f.close()
 
